@@ -1,0 +1,23 @@
+version: "3"
+services:
+  app:
+    image: histelen/laravel-php-apache:1.0
+    working_dir: /var/www/myapp
+    depends_on:
+      - mysql
+    ports:
+      - "8002:80"
+    volumes:
+      - ./public:/var/www/myapp
+    links:
+      - mysql:vigiles-db
+    env_file: .docker.env
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    ports:
+      - "3309:3306"
+    environment:
+      - MYSQL_DATABASE=laravel
+      - MYSQL_ROOT_PASSWORD=root
